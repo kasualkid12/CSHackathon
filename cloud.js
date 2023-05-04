@@ -1,7 +1,13 @@
 // const body = document.body;
 
 // selecting all paraghraphs
-const wordNodes = document.querySelectorAll('p'); // returns array of sentences
+const pWords = document.querySelectorAll('p');
+const h1Words = document.querySelectorAll('h1');
+const h2Words = document.querySelectorAll('h1');
+const h3Words = document.querySelectorAll('h1');
+const spans = document.querySelectorAll('span');
+
+// returns array of sentences
 // turn sentences into array of words
 // turn array of array of words into array of words
 
@@ -20,12 +26,30 @@ const thingsToIgnore = [
   'that',
   'or',
   'it',
+  '',
 ];
 
 // put words into array
-wordNodes.forEach((e) =>
+pWords.forEach((e) =>
   arrOfSentences.push(e.innerText.replace(/[^A-Z0-9 ]/gi, '').toLowerCase())
 );
+
+h1Words.forEach((e) =>
+  arrOfSentences.push(e.innerText.replace(/[^A-Z0-9 ]/gi, '').toLowerCase())
+);
+
+h2Words.forEach((e) =>
+  arrOfSentences.push(e.innerText.replace(/[^A-Z0-9 ]/gi, '').toLowerCase())
+);
+
+h3Words.forEach((e) =>
+  arrOfSentences.push(e.innerText.replace(/[^A-Z0-9 ]/gi, '').toLowerCase())
+);
+
+spans.forEach((e) =>
+  arrOfSentences.push(e.innerText.replace(/[^A-Z0-9 ]/gi, '').toLowerCase())
+);
+
 const arrOfWords = arrOfSentences.map((e) => e.split(' '));
 const arrOfWords2 = arrOfWords.flat(Infinity);
 const filteredWords = arrOfWords2.filter((e) => {
@@ -37,6 +61,8 @@ const wordMap = new Map();
 filteredWords.forEach((word) => {
   wordMap.set(word, wordMap.get(word) + 1 || 1);
 });
+
+const maxCount = Math.max(...wordMap.values());
 
 // generate word cloud
 // use keys as innertext
@@ -55,7 +81,7 @@ wordCloudDiv.style.flexFlow = 'row wrap';
 
 document.querySelector('body').innerHTML = '';
 for (let [key, value] of wordMap) {
-  if (value >= 4) {
+  if (value >= 1) {
     const word = document.createElement('p');
     word.setAttribute('class', `${key}classname`);
     word.innerHTML = '&#160;' + key;
@@ -65,8 +91,9 @@ for (let [key, value] of wordMap) {
     word.style.transitionDelay = '250ms';
     word.style.transitionDuration = '4s';
 
+    const targetFontSize = (12.5 * value) / maxCount;
     setTimeout(() => {
-      word.style.fontSize = `${Math.ceil(value / 4)}em`;
+      word.style.fontSize = `${targetFontSize}em`;
       return;
     });
   }
