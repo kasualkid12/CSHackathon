@@ -15,17 +15,6 @@
   "background": {
     "service_worker": "background.js"
   },
-  "content_scripts": [
-    {
-      "matches": [
-        "https://*.wikipedia.org/*",
-        "https://www.youtube.com/*",
-        "https://www.reddit.com/*",
-        "<all_urls>"
-      ],
-      "js": ["./main.js"]
-    }
-  ],
   "icons": {
     "16": "images/icon_16.png",
     "32": "images/icon_32.png",
