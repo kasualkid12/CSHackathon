@@ -101,7 +101,7 @@ for (let [key, value] of wordMap) {
     setTimeout(() => {
       word.style.fontSize = `${targetFontSize}em`;
       return;
-    }, (timer += 100));
+    }, (timer += 5));
 
     word.addEventListener('click', (e) => {
       e.target.style.transitionDuration = '0.1s';
