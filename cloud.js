@@ -62,8 +62,6 @@ filteredWords.forEach((word) => {
   wordMap.set(word, wordMap.get(word) + 1 || 1);
 });
 
-const maxCount = Math.max(...wordMap.values());
-
 // generate word cloud
 // use keys as innertext
 // use values as font-size
@@ -74,6 +72,11 @@ const maxCount = Math.max(...wordMap.values());
 //     word.innerText = key;
 //     word.
 // }
+
+const maxCount = Math.max(...wordMap.values());
+const avgCount = maxCount / wordMap.size;
+const avgAdjusted = (maxCount + avgCount) / 2;
+
 const wordCloudDiv = document.createElement('div');
 wordCloudDiv.setAttribute('class', 'wordCloud');
 wordCloudDiv.style.display = 'flex';
@@ -83,7 +86,7 @@ document.querySelector('body').innerHTML = '';
 for (let [key, value] of wordMap) {
   if (value >= 1) {
     const word = document.createElement('p');
-    word.setAttribute('class', `${key}classname`);
+    word.setAttribute('class', `classname${key}`);
     word.innerHTML = '&#160;' + key;
     word.style.fontSize = `1px`;
     wordCloudDiv.appendChild(word);
@@ -91,7 +94,7 @@ for (let [key, value] of wordMap) {
     word.style.transitionDelay = '250ms';
     word.style.transitionDuration = '4s';
 
-    const targetFontSize = (12.5 * value) / maxCount;
+    const targetFontSize = (5 * value) / avgAdjusted;
     setTimeout(() => {
       word.style.fontSize = `${targetFontSize}em`;
       return;
@@ -103,16 +106,18 @@ for (let [key, value] of wordMap) {
       wordMap.delete(word.innerText.slice(1));
 
       for (let [key2, value2] of wordMap) {
-        const newWord = document.querySelector(`.${key2}classname`);
+        const newWord = document.querySelector(`.classname${key2}`);
 
         //   word.style.transitionProperty = 'font-size';
         //   word.style.transitionDelay = '250ms';
         //   word.style.transitionDuration = '4s';
 
         const newMaxCount = Math.max(...wordMap.values());
+        const newAvgCount = newMaxCount / wordMap.size;
+        const newAvgAdjusted = (newMaxCount + newAvgCount) / 2;
         console.log(newMaxCount);
 
-        const targetFontSize = (12.5 * value2) / newMaxCount;
+        const targetFontSize = (5 * value2) / newAvgAdjusted;
         setTimeout(() => {
           newWord.style.fontSize = `${targetFontSize}em`;
           return;
@@ -134,6 +139,22 @@ for (let [key, value] of wordMap) {
 //     word.style.fontSize = `${Math.ceil(value / 3)}em`;
 //   }
 // }
+
+var styles = `
+p {
+    margin: 0px;
+    padding: 0px;
+}
+p:hover {
+    -ms-transform: scale(1.1); /* IE 9 */
+    -webkit-transform: scale(1.1); /* Safari 3-8 */
+    transform: scale(1.1);
+  }
+  
+  `;
+var styleSheet = document.createElement('style');
+styleSheet.innerText = styles;
+document.head.appendChild(styleSheet);
 
 document.querySelector('body').appendChild(wordCloudDiv);
 
