@@ -83,6 +83,9 @@ wordCloudDiv.style.display = 'flex';
 wordCloudDiv.style.flexFlow = 'row wrap';
 
 document.querySelector('body').innerHTML = '';
+
+let timer = 100;
+
 for (let [key, value] of wordMap) {
   if (value >= 1) {
     const word = document.createElement('p');
@@ -98,7 +101,7 @@ for (let [key, value] of wordMap) {
     setTimeout(() => {
       word.style.fontSize = `${targetFontSize}em`;
       return;
-    });
+    }, (timer += 100));
 
     word.addEventListener('click', (e) => {
       e.target.style.transitionDuration = '0.1s';
