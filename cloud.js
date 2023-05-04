@@ -96,6 +96,16 @@ for (let [key, value] of wordMap) {
       word.style.fontSize = `${targetFontSize}em`;
       return;
     });
+
+    word.addEventListener('click', (e) => {
+      e.target.style.transitionDuration = '0.25s';
+      e.target.style.fontSize = '1px';
+      setTimeout(() => {
+        e.target.remove();
+        return;
+      }, 250);
+      //   ;
+    });
   }
 }
 
