@@ -98,12 +98,30 @@ for (let [key, value] of wordMap) {
     });
 
     word.addEventListener('click', (e) => {
-      e.target.style.transitionDuration = '0.25s';
-      e.target.style.fontSize = '1px';
-      setTimeout(() => {
-        e.target.remove();
-        return;
-      }, 250);
+      e.target.style.transitionDuration = '0.1s';
+      e.target.style.fontSize = '0px';
+      wordMap.delete(word.innerText.slice(1));
+
+      for (let [key2, value2] of wordMap) {
+        const newWord = document.querySelector(`.${key2}classname`);
+
+        //   word.style.transitionProperty = 'font-size';
+        //   word.style.transitionDelay = '250ms';
+        //   word.style.transitionDuration = '4s';
+
+        const newMaxCount = Math.max(...wordMap.values());
+        console.log(newMaxCount);
+
+        const targetFontSize = (12.5 * value2) / newMaxCount;
+        setTimeout(() => {
+          newWord.style.fontSize = `${targetFontSize}em`;
+          return;
+        });
+      }
+      //   setTimeout(() => {
+      //     e.target.remove();
+      //     return;
+      //   }, 250);
       //   ;
     });
   }
