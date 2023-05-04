@@ -91,7 +91,7 @@ for (let [key, value] of wordMap) {
     const word = document.createElement('p');
     word.setAttribute('class', `classname${key}`);
     word.innerHTML = '&#160;' + key;
-    word.style.fontSize = `1px`;
+    word.style.fontSize = `0px`;
     wordCloudDiv.appendChild(word);
     word.style.transitionProperty = 'font-size';
     word.style.transitionDelay = '250ms';
